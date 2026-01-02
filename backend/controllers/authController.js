@@ -1,11 +1,12 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
-
 import User from "../models/User.js";
 import { generateOtp6, otpExpiryMinutes } from "../utils/otp.js";
 import { sendOtpEmail } from "../utils/mailer.js";
+import { OAuth2Client } from "google-auth-library";
 
+const gClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 function signToken(user) {
   return jwt.sign(
     { sub: user._id.toString(), role: user.role },
@@ -78,11 +79,52 @@ export async function login(req, res) {
   res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
 }
 
+// POST /api/auth/google
+export async function googleLogin(req, res) {
+  try {
+    const { credential } = req.body;
+    if (!credential) return res.status(400).json({ message: "Missing credential" });
+
+    const ticket = await gClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const email = payload?.email;
+    const name = payload?.name || "Google User";
+
+    if (!email) return res.status(400).json({ message: "Google email not found" });
+
+    // find or create user
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        passwordHash: "GOOGLE", 
+        role: "user",
+        isActive: true,
+      });
+    }
+
+    if (!user.isActive) return res.status(403).json({ message: "Account deactivated" });
+
+    const token = signToken(user);
+    res.json({ token });
+  } catch (e) {
+    console.log("googleLogin error:", e);
+    res.status(401).json({ message: "Google login failed" });
+  }
+}
+
+// Get current user
 export async function me(req, res) {
   const u = req.user;
   res.json({ id: u._id, name: u.name, email: u.email, role: u.role, isVerified: u.isVerified, isActive: u.isActive });
 }
 
+// forgot password
 export async function forgotPassword(req, res) {
   const { email } = req.body;
 
@@ -101,6 +143,7 @@ export async function forgotPassword(req, res) {
   return res.json({ message: "If account exists, OTP sent." });
 }
 
+// resert password
 export async function resetPassword(req, res) {
   const { email, otp, newPassword } = req.body;
 
