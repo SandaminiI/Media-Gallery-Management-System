@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 import { requireAuth } from "../middlewares/auth.js";
-import { register, verifyOtp, login, me, forgotPassword, resetPassword, getMe, updateMe } from "../controllers/authController.js";
+import { register, verifyOtp, login, me, forgotPassword, resetPassword, getMe, updateMe, googleLogin } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -13,5 +13,6 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", body("newPassword").isLength({ min: 6 }), resetPassword);
 router.get("/me", requireAuth, getMe);
 router.put("/me", requireAuth, updateMe);
+router.post("/google", googleLogin);
 
 export default router;
