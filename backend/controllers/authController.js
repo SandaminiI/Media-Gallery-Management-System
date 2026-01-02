@@ -88,7 +88,6 @@ export async function forgotPassword(req, res) {
 
   const user = await User.findOne({ email: email.toLowerCase() });
 
-  // Safe response (don’t reveal if user exists)
   if (!user) return res.json({ message: "If account exists, OTP sent." });
   if (!user.isActive) return res.status(403).json({ message: "Account deactivated" });
 
@@ -122,8 +121,48 @@ export async function resetPassword(req, res) {
   user.passwordHash = await bcrypt.hash(newPassword, 12);
   user.otpHash = null;
   user.otpExpiresAt = null;
-  user.isVerified = true; // ensure verified
+  user.isVerified = true;
   await user.save();
 
   return res.json({ message: "Password updated. Please login." });
+}
+
+//Get user details
+export async function getMe(req, res) {
+  res.json({
+    _id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+    role: req.user.role,
+    isActive: req.user.isActive,
+    createdAt: req.user.createdAt,
+  });
+}
+
+//Update user details
+export async function updateMe(req, res) {
+  try {
+    const { name, email } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({ message: "name and email are required" });
+    }
+
+    // avoid duplicate email
+    const exists = await User.findOne({ email: email.toLowerCase(), _id: { $ne: req.user._id } });
+    if (exists) return res.status(409).json({ message: "Email already in use" });
+
+    req.user.name = name.trim();
+    req.user.email = email.toLowerCase().trim();
+    await req.user.save();
+
+    res.json({
+      _id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      role: req.user.role,
+    });
+  } catch (e) {
+    res.status(500).json({ message: "Failed to update profile" });
+  }
 }
