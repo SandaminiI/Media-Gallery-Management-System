@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import SharingImage from "../assets/sharing.jpeg";
+import UploadImage from "../assets/upload.jpeg";
+import GalleryImage from "../assets/gallery.jpeg";
+import ZipImage from "../assets/zip.jpeg";
 
 export default function LandingPage() {
   const { user } = useAuth();
 
   return (
     <div>
+      {/* HERO */}
       <div className="bg-dark text-white">
         <div className="container py-5">
           <div className="row align-items-center g-4">
@@ -46,16 +51,14 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* RIGHT – FEATURE HIGHLIGHTS (REPLACEMENT) */}
+            {/* RIGHT – FEATURE HIGHLIGHTS WITH IMAGES */}
             <div className="col-12 col-lg-5">
               <div className="card shadow-lg border-0">
                 <div className="card-body">
-                  <h5 className="fw-bold mb-3">
-                    Why choose this system?
-                  </h5>
+                  <h5 className="fw-bold mb-3">Why choose this system?</h5>
 
                   <ul className="list-unstyled mb-0">
-                    <li className="mb-3 d-flex gap-2">
+                    <li className="mb-3 d-flex gap-2 align-items-start">
                       <span className="badge text-bg-primary">✓</span>
                       <div>
                         <div className="fw-semibold">Secure Authentication</div>
@@ -65,7 +68,7 @@ export default function LandingPage() {
                       </div>
                     </li>
 
-                    <li className="mb-3 d-flex gap-2">
+                    <li className="mb-3 d-flex gap-2 align-items-start">
                       <span className="badge text-bg-primary">✓</span>
                       <div>
                         <div className="fw-semibold">Smart Gallery</div>
@@ -75,7 +78,7 @@ export default function LandingPage() {
                       </div>
                     </li>
 
-                    <li className="mb-3 d-flex gap-2">
+                    <li className="mb-3 d-flex gap-2 align-items-start">
                       <span className="badge text-bg-primary">✓</span>
                       <div>
                         <div className="fw-semibold">Easy Sharing</div>
@@ -85,7 +88,7 @@ export default function LandingPage() {
                       </div>
                     </li>
 
-                    <li className="d-flex gap-2">
+                    <li className="d-flex gap-2 align-items-start">
                       <span className="badge text-bg-primary">✓</span>
                       <div>
                         <div className="fw-semibold">ZIP Downloads</div>
@@ -95,6 +98,15 @@ export default function LandingPage() {
                       </div>
                     </li>
                   </ul>
+
+                  <div className="mt-4 d-flex flex-wrap gap-2 justify-content-center">
+                    {/* <img
+                      src={SharingImage}
+                      alt="Sharing feature"
+                      className="img-fluid rounded shadow-sm"
+                    /> */}
+                   
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,18 +128,22 @@ export default function LandingPage() {
           <FeatureCard
             title="Upload & Validate"
             text="Upload JPG/PNG with file size checks and clean error messages."
+            img={UploadImage}
           />
           <FeatureCard
             title="Gallery Management"
             text="Search, edit metadata, delete items, and keep everything organized."
+            img={GalleryImage}
           />
           <FeatureCard
             title="Sharing"
             text="Toggle shared/private and allow others to view shared items."
+            img={SharingImage}
           />
           <FeatureCard
             title="Download ZIP"
             text="Select multiple images and download as a single ZIP file."
+            img={ZipImage}
           />
         </div>
 
@@ -183,11 +199,11 @@ export default function LandingPage() {
 }
 
 /* ---------- Feature Card ---------- */
-
-function FeatureCard({ title, text }) {
+function FeatureCard({ title, text, img }) {
   return (
     <div className="col-12 col-md-6 col-lg-3">
       <div className="card h-100 shadow-sm">
+        <img src={img} className="card-img-top" alt={title} />
         <div className="card-body">
           <div className="fw-bold">{title}</div>
           <div className="text-muted mt-2">{text}</div>
