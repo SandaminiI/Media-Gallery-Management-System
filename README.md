@@ -93,22 +93,29 @@ cd Media-Gallery-Management-System
 ```
 
 ### Backend Setup
+```
 cd backend
 npm install
+```
 
 ### Start backend:
+```
 npm run dev
+```
 
 ### Frontend Setup
+```
 cd frontend
 npm install
+```
 
 ### Start frontend:
+```
 npm run dev
-
+```
 ---
 
-##🤖 AI Usage Notes (Important)
+## 🤖 AI Usage Notes (Important)
 ### How AI Was Used
 
 - Code scaffolding & refactoring suggestions
@@ -117,6 +124,13 @@ npm run dev
 - UI/UX improvement ideas
 - Security best-practice recommendations
 
+### Developer Responsibility
+
+All AI-assisted outputs were:
+- Reviewed and understood
+- Manually integrated
+- Tested locally
+- Modified where necessary
 ---
 
 ## 📜 License
