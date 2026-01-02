@@ -61,6 +61,7 @@ This system allows users to securely manage media files, communicate via a conta
 
 ## 📁 Project Structure
 
+```text
 Media-Gallery-Management-System/
 │
 ├── backend/
@@ -81,13 +82,15 @@ Media-Gallery-Management-System/
 │   └── vite.config.js
 │
 └── README.md
-
+```
 ---
 
 ## ⚙️ Setup Instructions
 ### Clone Repository
+```
 git clone https://github.com/your-username/media-gallery-management-system.git
 cd Media-Gallery-Management-System
+```
 
 ### Backend Setup
 cd backend
