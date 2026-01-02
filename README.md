@@ -115,7 +115,7 @@ npm run dev
 ```
 ---
 
-## 🤖 AI Usage Notes (Important)
+## 🤖 AI Usage Notes 
 ### How AI Was Used
 
 - Code scaffolding & refactoring suggestions
