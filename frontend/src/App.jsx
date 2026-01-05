@@ -58,9 +58,9 @@ export default function App() {
           <Route
             path="/shared"
             element={
-              <ProtectedRoute>
+      
                 <SharedGalleryPage />
-              </ProtectedRoute>
+             
             }
           />
           <Route path="/contact" element={<ContactPage />} />

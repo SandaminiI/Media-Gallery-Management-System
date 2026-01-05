@@ -21,7 +21,7 @@ router.put("/:id", requireAuth, updateMedia);
 router.post("/zip", requireAuth, downloadZip);
 
 // shared gallery (any logged in user can view)
-router.get("/shared", requireAuth, listSharedMedia);
+router.get("/shared",  listSharedMedia);
 
 // toggle share
 router.patch("/:id/share", requireAuth, toggleShare );
