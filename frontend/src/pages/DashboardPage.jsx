@@ -138,7 +138,7 @@ export default function DashboardPage() {
         </Link>
         {user?.role === "admin" && (
           <Link to="/admin/messages" className="btn btn-outline-danger btn-sm">
-            Admin Messages
+            All Messages
           </Link>
         )}
       </div>
