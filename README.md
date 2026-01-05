@@ -121,7 +121,6 @@ npm run dev
 - Code scaffolding & refactoring suggestions
 - API design guidance
 - Error debugging & optimization tips
-- UI/UX improvement ideas
 - Security best-practice recommendations
 
 ### Developer Responsibility
